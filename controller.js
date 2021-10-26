@@ -70,3 +70,18 @@ exports.ubahDataById = function(req, res) {
         }
     )
 }
+
+// menghapus data by id
+exports.hapusData = function(req, res) {
+    var id = req.body.id_mahasiswa;
+    connection.query('DELETE FROM mahasiswa WHERE id_mahasiswa=?', [id],
+        function(error, rows, fields) {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                respones.ok("Data berhasil diubah", res);
+            }
+        }
+    )
+}

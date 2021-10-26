@@ -17,4 +17,8 @@ module.exports = function(app) {
 
     app.route('/ubah/:id')
     .put(jsonku.ubahDataById);
+
+    app.route('/hapus/:id')
+    .delete(jsonku.hapusData);
+
 }
