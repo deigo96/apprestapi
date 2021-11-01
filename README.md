@@ -13,4 +13,4 @@ Rest API Node Js
 - nodemon
 
 # database
-export file dbrestapi.sql melalui phpmyadmin
+import file database dbrestapi.sql melalui phpmyadmin
