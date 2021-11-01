@@ -11,3 +11,6 @@ Rest API Node Js
 - body-parser
 - mysql
 - nodemon
+
+# database
+export file dbrestapi.sql melalui phpmyadmin
