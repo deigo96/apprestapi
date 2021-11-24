@@ -11,3 +11,6 @@ Rest API Node Js
 - body-parser
 - mysql
 - nodemon
+
+# database
+import file database dbrestapi.sql melalui phpmyadmin
