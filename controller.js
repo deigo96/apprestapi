@@ -9,8 +9,8 @@ exports.index = function(req, res) {
 }
 
 // menampilkan semua data
-exports.tampilData = function(req, res){
-    connection.query('SELECT * FROM mahasiswa', function(error, rows, fields){
+exports.tampilModel = function(req, res){
+    connection.query('SELECT * FROM models', function(error, rows, fields){
         if(error) {
             console.log(error);
         }
@@ -20,10 +20,10 @@ exports.tampilData = function(req, res){
     })
 }
 
-// menampilkan data by ID
-exports.tampilDataById = function(req, res){
+// menampilkan Model by ID
+exports.tampilModelById = function(req, res){
     let id = req.params.id;
-    connection.query('SELECT * FROM mahasiswa WHERE id_mahasiswa = ?', [id], function(error, rows, fields){
+    connection.query('SELECT * FROM models WHERE mId = ?', [id], function(error, rows, fields){
         if(error) {
             console.log(error);
         }
@@ -33,54 +33,131 @@ exports.tampilDataById = function(req, res){
     })
 }
 
-// menambah data 
-exports.tambahData = function(req, res) {
-    var nim = req.body.nim;
-    var nama = req.body.nama;
-    var jurusan = req.body.jurusan;
+// menambah Model 
+exports.tambahModel = function(req, res) {
+    var mName = req.body.mName;
+    var price = req.body.price;
+    var location = req.body.location;
 
-    connection.query('INSERT INTO mahasiswa (nim, nama, jurusan) VALUES(?,?,?)',
-        [nim, nama, jurusan],
+    connection.query('INSERT INTO models (mName, price, location) VALUES(?,?,?)',
+        [mName, price, location],
         function(error, rows, fields) {
             if(error) {
                 console.log(error);
             }
             else {
-                respones.ok("Data berhasil ditamabah", res);
+                respones.ok("Model berhasil ditamabah", res);
             }
         }
     )
 }
 
-// mengubah data berdasarkan id
-exports.ubahDataById = function(req, res) {
-    var id = req.body.id_mahasiswa;
-    var nim = req.body.nim;
-    var nama = req.body.nama;
-    var jurusan = req.body.jurusan;
+// mengubah Model berdasarkan id
+exports.ubahModelById = function(req, res) {
+    var mId = req.body.mId;
+    var mName = req.body.mName;
+    var price = req.body.price;
+    var location = req.body.location;
 
-    connection.query('UPDATE mahasiswa SET nim=?, nama=?, jurusan=? WHERE id_mahasiswa=?', [nim, nama, jurusan, id],
+    connection.query('UPDATE models SET mName=?, price=?, location=? WHERE mId=?', [mName, price, location, mId],
         function(error, rows, fields) {
             if(error) {
                 console.log(error);
             }
             else {
-                respones.ok("Data berhasil diubah", res);
+                respones.ok("Model berhasil diubah", res);
             }
         }
     )
 }
 
-// menghapus data by id
-exports.hapusData = function(req, res) {
-    var id = req.body.id_mahasiswa;
-    connection.query('DELETE FROM mahasiswa WHERE id_mahasiswa=?', [id],
+// menghapus Model by id
+exports.hapusModel = function(req, res) {
+    var id = req.body.mId;
+    connection.query('DELETE FROM models WHERE mId=?', [id],
         function(error, rows, fields) {
             if(error) {
                 console.log(error);
             }
             else {
-                respones.ok("Data berhasil diubah", res);
+                respones.ok("Model berhasil diubah", res);
+            }
+        }
+    )
+}
+
+exports.tampilProduct = function(req, res){
+    connection.query('SELECT * FROM products', function(error, rows, fields){
+        if(error) {
+            console.log(error);
+        }
+        else {
+            respones.ok(rows, res);
+        }
+    })
+}
+
+// menampilkan Product by ID
+exports.tampilProductById = function(req, res){
+    let id = req.params.id;
+    connection.query('SELECT * FROM products WHERE pId = ?', [id], function(error, rows, fields){
+        if(error) {
+            console.log(error);
+        }
+        else {
+            respones.ok(rows, res);
+        }
+    })
+}
+
+// menambah Product 
+exports.tambahProduct = function(req, res) {
+    var pName = req.body.pName;
+    var pDp = req.body.pDp;
+    var pDate = req.body.pDate;
+
+    connection.query('INSERT INTO products (pName, pDp, pDate) VALUES(?,?,?)',
+        [pName, pDp, pDate],
+        function(error, rows, fields) {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                respones.ok("Product berhasil ditamabah", res);
+            }
+        }
+    )
+}
+
+// mengubah Product berdasarkan id
+exports.ubahProductById = function(req, res) {
+    var pId = req.body.pId;
+    var pName = req.body.pName;
+    var pDp = req.body.pDp;
+    var pDate = req.body.pDate;
+
+    connection.query('UPDATE products SET pName=?, pDp=?, pDate=? WHERE pId=?', [pName, pDp, pDate, pId],
+        function(error, rows, fields) {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                respones.ok("Product berhasil diubah", res);
+            }
+        }
+    )
+}
+
+// menghapus Product by id
+exports.hapusProduct = function(req, res) {
+    var id = req.body.pId;
+    connection.query('DELETE FROM products WHERE pId=?', [id],
+        function(error, rows, fields) {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                respones.ok("Product berhasil diubah", res);
             }
         }
     )

@@ -6,19 +6,34 @@ module.exports = function(app) {
     app.route('/')
     .get(jsonku.index);
 
-    app.route('/tampil')
-    .get(jsonku.tampilData);
+    app.route('/tampil-model')
+    .get(jsonku.tampilModel);
 
-    app.route('/tampil/:id')
-    .get(jsonku.tampilDataById);
+    app.route('/tampil-model/:id')
+    .get(jsonku.tampilModelById);
 
-    app.route('/tambah')
-    .post(jsonku.tambahData);
+    app.route('/tambah-model')
+    .post(jsonku.tambahModel);
 
-    app.route('/ubah/:id')
-    .put(jsonku.ubahDataById);
+    app.route('/ubah-model/:id')
+    .put(jsonku.ubahModelById);
 
-    app.route('/hapus/:id')
-    .delete(jsonku.hapusData);
+    app.route('/hapus-model/:id')
+    .delete(jsonku.hapusModel);
+
+    app.route('/tampil-product')
+    .get(jsonku.tampilProduct);
+
+    app.route('/tampil-product/:id')
+    .get(jsonku.tampilProductById);
+
+    app.route('/tambah-product')
+    .post(jsonku.tambahProduct);
+
+    app.route('/ubah-product/:id')
+    .put(jsonku.ubahProductById);
+
+    app.route('/hapus-product/:id')
+    .delete(jsonku.hapusProduct);
 
 }
