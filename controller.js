@@ -10,7 +10,8 @@ exports.index = function(req, res) {
 
 // menampilkan semua data
 exports.tampilModel = function(req, res){
-    connection.query('SELECT * FROM models', function(error, rows, fields){
+    let pId = req.params.pId
+    connection.query('SELECT * FROM products JOIN models ON products.pId = models.productId', function(error, rows, fields){
         if(error) {
             console.log(error);
         }
@@ -35,12 +36,14 @@ exports.tampilModelById = function(req, res){
 
 // menambah Model 
 exports.tambahModel = function(req, res) {
-    var mName = req.body.mName;
-    var price = req.body.price;
-    var location = req.body.location;
+    let mName = req.body.mName;
+    let price = req.body.price;
+    let location = req.body.location;
+    let mDescription = req.body.mDescription;
+    let productId = req.body.productId;
 
-    connection.query('INSERT INTO models (mName, price, location) VALUES(?,?,?)',
-        [mName, price, location],
+    connection.query('INSERT INTO models (mName, price, location, mDescription, productId) VALUES(?,?,?,?,?)',
+        [mName, price, location, mDescription, productId],
         function(error, rows, fields) {
             if(error) {
                 console.log(error);
