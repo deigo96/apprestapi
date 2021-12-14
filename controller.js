@@ -4,15 +4,26 @@ var respones = require('./res');
 var connection = require('./koneksi');
 
 
-exports.index = function(req, res) {
+exports.index = function (req, res) {
     respones.ok("Rest API berjalan", res);
 }
 
+exports.loginAdmin = function (req, res) {
+    connection.query('SELECT * FROM admin', function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            respones.ok(rows, res);
+        }
+    })
+}
+
 // menampilkan semua data
-exports.tampilModel = function(req, res){
+exports.tampilModel = function (req, res) {
     let pId = req.params.pId
-    connection.query('SELECT * FROM products JOIN models ON products.pId = models.productId', function(error, rows, fields){
-        if(error) {
+    connection.query('SELECT * FROM products JOIN models ON products.pId = models.productId', function (error, rows, fields) {
+        if (error) {
             console.log(error);
         }
         else {
@@ -22,10 +33,10 @@ exports.tampilModel = function(req, res){
 }
 
 // menampilkan Model by ID
-exports.tampilModelById = function(req, res){
+exports.tampilModelById = function (req, res) {
     let id = req.params.id;
-    connection.query('SELECT * FROM models WHERE mId = ?', [id], function(error, rows, fields){
-        if(error) {
+    connection.query('SELECT * FROM models WHERE mId = ?', [id], function (error, rows, fields) {
+        if (error) {
             console.log(error);
         }
         else {
@@ -35,17 +46,18 @@ exports.tampilModelById = function(req, res){
 }
 
 // menambah Model 
-exports.tambahModel = function(req, res) {
+exports.tambahModel = function (req, res) {
     let mName = req.body.mName;
     let price = req.body.price;
     let location = req.body.location;
     let mDescription = req.body.mDescription;
     let productId = req.body.productId;
+    let adminId = req.body.adminId;
 
-    connection.query('INSERT INTO models (mName, price, location, mDescription, productId) VALUES(?,?,?,?,?)',
-        [mName, price, location, mDescription, productId],
-        function(error, rows, fields) {
-            if(error) {
+    connection.query('INSERT INTO models (mName, price, location, mDescription, productId, adminId) VALUES(?,?,?,?,?,?)',
+        [mName, price, location, mDescription, productId, adminId],
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
@@ -56,15 +68,15 @@ exports.tambahModel = function(req, res) {
 }
 
 // mengubah Model berdasarkan id
-exports.ubahModelById = function(req, res) {
+exports.ubahModelById = function (req, res) {
     var mId = req.body.mId;
     var mName = req.body.mName;
     var price = req.body.price;
     var location = req.body.location;
 
     connection.query('UPDATE models SET mName=?, price=?, location=? WHERE mId=?', [mName, price, location, mId],
-        function(error, rows, fields) {
-            if(error) {
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
@@ -75,11 +87,11 @@ exports.ubahModelById = function(req, res) {
 }
 
 // menghapus Model by id
-exports.hapusModel = function(req, res) {
+exports.hapusModel = function (req, res) {
     var id = req.body.mId;
     connection.query('DELETE FROM models WHERE mId=?', [id],
-        function(error, rows, fields) {
-            if(error) {
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
@@ -89,9 +101,9 @@ exports.hapusModel = function(req, res) {
     )
 }
 
-exports.tampilProduct = function(req, res){
-    connection.query('SELECT * FROM products', function(error, rows, fields){
-        if(error) {
+exports.tampilProduct = function (req, res) {
+    connection.query('SELECT * FROM products', function (error, rows, fields) {
+        if (error) {
             console.log(error);
         }
         else {
@@ -101,10 +113,10 @@ exports.tampilProduct = function(req, res){
 }
 
 // menampilkan Product by ID
-exports.tampilProductById = function(req, res){
+exports.tampilProductById = function (req, res) {
     let id = req.params.id;
-    connection.query('SELECT * FROM products WHERE pId = ?', [id], function(error, rows, fields){
-        if(error) {
+    connection.query('SELECT * FROM products WHERE pId = ?', [id], function (error, rows, fields) {
+        if (error) {
             console.log(error);
         }
         else {
@@ -114,15 +126,15 @@ exports.tampilProductById = function(req, res){
 }
 
 // menambah Product 
-exports.tambahProduct = function(req, res) {
+exports.tambahProduct = function (req, res) {
     var pName = req.body.pName;
     var pDp = req.body.pDp;
     var pDate = req.body.pDate;
 
     connection.query('INSERT INTO products (pName, pDp, pDate) VALUES(?,?,?)',
         [pName, pDp, pDate],
-        function(error, rows, fields) {
-            if(error) {
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
@@ -133,15 +145,15 @@ exports.tambahProduct = function(req, res) {
 }
 
 // mengubah Product berdasarkan id
-exports.ubahProductById = function(req, res) {
+exports.ubahProductById = function (req, res) {
     var pId = req.body.pId;
     var pName = req.body.pName;
     var pDp = req.body.pDp;
     var pDate = req.body.pDate;
 
     connection.query('UPDATE products SET pName=?, pDp=?, pDate=? WHERE pId=?', [pName, pDp, pDate, pId],
-        function(error, rows, fields) {
-            if(error) {
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
@@ -152,11 +164,11 @@ exports.ubahProductById = function(req, res) {
 }
 
 // menghapus Product by id
-exports.hapusProduct = function(req, res) {
+exports.hapusProduct = function (req, res) {
     var id = req.body.pId;
     connection.query('DELETE FROM products WHERE pId=?', [id],
-        function(error, rows, fields) {
-            if(error) {
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
             }
             else {
